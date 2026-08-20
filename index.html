@@ -1,0 +1,1924 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AnemiCare - Clinical Anemia Diagnostic Assistant (Bilingual English & Sinhala / සිංහල)." />
+  <title>AnemiCare - Clinical Diagnostic Suite (English & සිංහල)</title>
+  
+  <!-- CSS Stylesheets -->
+
+  <style>
+
+/* === variables.css === */
+/* AnemiCare Premium Medical Diagnostic Design System */
+:root {
+  /* Color Palette - Ultra-Luxe Dark Clinical Theme (Default) */
+  --bg-primary: #070c1a;
+  --bg-secondary: #0e172e;
+  --bg-card: rgba(16, 26, 51, 0.75);
+  --bg-card-hover: rgba(25, 40, 77, 0.85);
+  --bg-input: #142244;
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-border-glow: rgba(0, 242, 254, 0.35);
+  --glass-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.5);
+
+  /* Glowing Neon Accents */
+  --primary-red: #ff2a5f;
+  --primary-red-hover: #e01b4c;
+  --primary-red-glow: rgba(255, 42, 95, 0.45);
+  
+  --accent-teal: #00f2fe;
+  --accent-teal-glow: rgba(0, 242, 254, 0.4);
+  --accent-cyan: #4facfe;
+  --accent-amber: #ffb703;
+  --accent-purple: #a855f7;
+
+  /* Diagnostic Status Colors */
+  --risk-low: #ffb703;           /* Yellow for No/Low Risk */
+  --risk-low-bg: rgba(255, 183, 3, 0.18);
+  --risk-moderate: #00e676;      /* Green for Medium Risk */
+  --risk-moderate-bg: rgba(0, 230, 118, 0.18);
+  --risk-high: #ff1744;          /* Red for High Risk */
+  --risk-high-bg: rgba(255, 23, 68, 0.18);
+
+  /* Text Colors */
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-subtle: #64748b;
+  --text-inverse: #0b1329;
+
+  /* Typography */
+  --font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-base: 16px;
+  --line-height: 1.6;
+
+  /* Spacing & Radii */
+  --border-radius-sm: 10px;
+  --border-radius-md: 20px;
+  --border-radius-lg: 28px;
+  --border-radius-pill: 9999px;
+  --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --max-width: 1360px;
+}
+
+/* Ultra-Clean Medical Light Theme */
+[data-theme="light"] {
+  --bg-primary: #f1f5f9;
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-card-hover: rgba(248, 250, 252, 0.98);
+  --bg-input: #e2e8f0;
+  --glass-border: rgba(15, 23, 42, 0.1);
+  --glass-border-glow: rgba(14, 165, 233, 0.3);
+  --glass-shadow: 0 12px 36px rgba(15, 23, 42, 0.08);
+
+  --text-main: #0f172a;
+  --text-muted: #334155;
+  --text-subtle: #64748b;
+  --text-inverse: #ffffff;
+
+  --primary-red: #e11d48;
+  --primary-red-glow: rgba(225, 29, 72, 0.25);
+  --accent-teal: #0d9488;
+  --accent-teal-glow: rgba(13, 148, 136, 0.25);
+}
+
+/* === global.css === */
+/* Global Resets & Ultra-Luxe Medical Aesthetics */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: var(--font-size-base);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(255, 42, 95, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(0, 242, 254, 0.08) 0%, transparent 45%);
+  background-attachment: fixed;
+  color: var(--text-main);
+  line-height: var(--line-height);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  transition: background var(--transition-normal), color var(--transition-normal);
+}
+
+/* Typography Helpers */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-main);
+  letter-spacing: -0.025em;
+}
+
+h1 { font-size: 2.35rem; }
+h2 { font-size: 1.85rem; }
+h3 { font-size: 1.4rem; }
+h4 { font-size: 1.18rem; }
+
+p {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* Glowing Glassmorphism Card Panels */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--border-radius-md);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  opacity: 0.5;
+}
+
+.glass-panel:hover {
+  border-color: var(--glass-border-glow);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 48px 0 rgba(0, 0, 0, 0.55), 0 0 20px rgba(0, 242, 254, 0.15);
+}
+
+/* App Container */
+.app-container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Glowing Clinical Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--border-radius-pill);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.badge-red {
+  background: rgba(255, 42, 95, 0.15);
+  color: var(--primary-red);
+  border: 1px solid rgba(255, 42, 95, 0.4);
+  box-shadow: 0 0 12px rgba(255, 42, 95, 0.2);
+}
+
+.badge-teal {
+  background: rgba(0, 242, 254, 0.15);
+  color: var(--accent-teal);
+  border: 1px solid rgba(0, 242, 254, 0.4);
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.2);
+}
+
+.badge-amber {
+  background: rgba(255, 183, 3, 0.15);
+  color: var(--accent-amber);
+  border: 1px solid rgba(255, 183, 3, 0.4);
+  box-shadow: 0 0 12px rgba(255, 183, 3, 0.2);
+}
+
+/* Stunning Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--border-radius-pill);
+  font-family: var(--font-family);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-red), #e01b4c);
+  color: #ffffff;
+  box-shadow: 0 6px 20px var(--primary-red-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 28px var(--primary-red-glow);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-main);
+  border: 1px solid var(--glass-border);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: var(--accent-teal);
+  color: var(--accent-teal);
+  box-shadow: 0 4px 16px rgba(0, 242, 254, 0.15);
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, var(--accent-teal), #00b4d8);
+  color: #070c1a;
+  box-shadow: 0 6px 20px var(--accent-teal-glow);
+}
+
+.btn-accent:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 28px var(--accent-teal-glow);
+}
+
+.btn-icon {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+/* Gradients */
+.text-gradient-red {
+  background: linear-gradient(135deg, #ff2a5f, #ff7b93);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-teal {
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-teal);
+}
+
+/* === components.css === */
+/* Layout Shell & Navigation Bar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(11, 19, 41, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0.85rem 0;
+  transition: background-color var(--transition-normal);
+}
+
+[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-main);
+  text-decoration: none;
+  letter-spacing: -0.03em;
+}
+
+.brand-icon {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, var(--primary-red), #d91b42);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px var(--primary-red-glow);
+}
+
+/* Tab Navigation */
+.nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.35rem;
+  border-radius: var(--border-radius-pill);
+  border: 1px solid var(--glass-border);
+  overflow-x: auto;
+}
+
+.nav-tab-btn {
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--border-radius-pill);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-family);
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.nav-tab-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-tab-btn.active {
+  color: #0b1329;
+  background: linear-gradient(135deg, var(--accent-teal), #00a896);
+  box-shadow: 0 4px 12px var(--accent-teal-glow);
+}
+
+/* Nav Controls */
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+/* Disclaimer Banner */
+.disclaimer-banner {
+  background: linear-gradient(90deg, rgba(255, 183, 3, 0.12), rgba(255, 59, 92, 0.12));
+  border-bottom: 1px solid rgba(255, 183, 3, 0.25);
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
+  color: var(--accent-amber);
+  text-align: center;
+}
+
+.disclaimer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Modal Overlay & Card Containers */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-container {
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--text-main);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  background: var(--primary-red);
+  color: #fff;
+}
+
+/* Print Stylesheet for Doctor Worksheet */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .navbar, .disclaimer-banner, .nav-tabs, .btn, footer {
+    display: none !important;
+  }
+  .printable-area {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    border: none !important;
+  }
+}
+
+/* === sections.css === */
+/* Section Layouts & Section Specific Components */
+.section-wrapper {
+  padding: 2.5rem 0 4rem;
+  display: none;
+  animation: fadeIn 0.35s ease-in-out forwards;
+}
+
+.section-wrapper.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section Header */
+.section-header {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 750px;
+}
+
+/* Dashboard Grid (Section 1) */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+.col-span-12 { grid-column: span 12; }
+.col-span-8 { grid-column: span 8; }
+.col-span-7 { grid-column: span 7; }
+.col-span-6 { grid-column: span 6; }
+.col-span-5 { grid-column: span 5; }
+.col-span-4 { grid-column: span 4; }
+
+@media (max-width: 1024px) {
+  .col-span-8, .col-span-7, .col-span-6, .col-span-5, .col-span-4 {
+    grid-column: span 12;
+  }
+}
+
+.card-padding {
+  padding: 1.75rem;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Section 3: Symptoms Checklist Styles */
+.symptom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.symptom-checkbox-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-sm);
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.symptom-checkbox-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.symptom-checkbox-card.selected {
+  background: rgba(255, 59, 92, 0.12);
+  border-color: var(--primary-red);
+}
+
+.symptom-checkbox-card input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--primary-red);
+  cursor: pointer;
+}
+
+.symptom-info h5 {
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.symptom-info p {
+  font-size: 0.82rem;
+  color: var(--text-subtle);
+}
+
+/* Section 4: Eye Pallor & Nail Inspection Cards */
+.photo-comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.inspection-card {
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  border: 2px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+  padding: 0.75rem;
+}
+
+.inspection-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-teal);
+  box-shadow: 0 8px 24px rgba(0, 210, 180, 0.2);
+}
+
+.inspection-card.selected {
+  border-color: var(--accent-teal);
+  background: rgba(0, 210, 180, 0.12);
+  box-shadow: 0 0 20px var(--accent-teal-glow);
+}
+
+.inspection-img-wrapper {
+  width: 100%;
+  height: 170px;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+  background: #000;
+  position: relative;
+}
+
+.inspection-img-wrapper img, .inspection-img-wrapper svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.inspection-card h4 {
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+
+.inspection-card p {
+  font-size: 0.83rem;
+}
+
+/* Section 5: Risk Meter Gauge */
+.risk-meter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
+.gauge-svg-wrapper {
+  position: relative;
+  width: 280px;
+  height: 160px;
+}
+
+.gauge-score-value {
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.risk-level-badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--border-radius-pill);
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 1rem;
+}
+
+.risk-level-low { background: var(--risk-low-bg); color: var(--risk-low); border: 1px solid var(--risk-low); }
+.risk-level-moderate { background: var(--risk-moderate-bg); color: var(--risk-moderate); border: 1px solid var(--risk-moderate); }
+.risk-level-high { background: var(--risk-high-bg); color: var(--risk-high); border: 1px solid var(--risk-high); }
+
+/* Section 7: Nutrition & Meal Cards */
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.food-card {
+  padding: 1.25rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.food-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: rgba(0, 210, 180, 0.12);
+  color: var(--accent-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+/* Section 8: Tracker & Reminders */
+.tracker-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: 0.85rem;
+}
+
+.timer-display {
+  font-family: monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-teal);
+}
+
+  </style>
+<base target="_blank">
+</head>
+<body>
+
+  <!-- Medical Disclaimer Top Bar -->
+  <div class="disclaimer-banner">
+    <div class="disclaimer-content">
+      <span id="top-disclaimer-text">🏥 <strong>Clinical Diagnostic Evaluation Suite:</strong> AnemiCare evaluates physical biomarkers (eye conjunctival pallor & nail bed koilonychia) and symptoms for clinical awareness & screening.</span>
+    </div>
+  </div>
+
+  <!-- Main Navbar Header -->
+  <header class="navbar">
+    <div class="app-container nav-container">
+      <a href="#" class="brand-logo" id="brand-home-link">
+        <div class="brand-icon" style="background:transparent; box-shadow:none; padding:0;">
+          <svg viewBox="0 0 100 100" width="38" height="38" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="dropGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff4d6d" />
+                <stop offset="100%" stop-color="#d90429" />
+              </linearGradient>
+              <linearGradient id="handGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#00f2fe" />
+                <stop offset="100%" stop-color="#4facfe" />
+              </linearGradient>
+            </defs>
+            <!-- Cupped Hand Art -->
+            <path d="M 18 68 Q 24 52 38 52 Q 44 58 55 58 Q 66 52 78 54 Q 86 64 74 74 Q 58 84 40 84 Q 24 84 18 68 Z" fill="none" stroke="url(#handGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M 28 62 Q 45 74 68 62" fill="none" stroke="url(#handGrad)" stroke-width="3" stroke-linecap="round" opacity="0.75" />
+            <!-- Blood Drop in Hand -->
+            <path d="M 50 18 C 50 18 30 42 30 55 C 30 66 39 74 50 74 C 61 74 70 66 70 55 C 70 42 50 18 50 18 Z" fill="url(#dropGrad)" />
+            <!-- Shine Reflection -->
+            <path d="M 44 42 C 40 48 40 56 44 60" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.7" />
+          </svg>
+        </div>
+        <span>Anemi<span style="color:var(--accent-teal);">Care</span> <span id="brand-sub-badge" style="font-size:0.75rem; color:var(--accent-cyan); font-weight:700; text-transform:uppercase; letter-spacing:0.08em; background:rgba(0,242,254,0.12); padding:0.2rem 0.6rem; border-radius:12px; border:1px solid rgba(0,242,254,0.3);">Diagnostic</span></span>
+      </a>
+
+      <!-- 8 Section Navigation Tabs -->
+      <nav class="nav-tabs">
+        <button class="nav-tab-btn active" data-section="section-home" id="nav-btn-home">1. Dashboard</button>
+        <button class="nav-tab-btn" data-section="section-description" id="nav-btn-about">2. Pathophysiology</button>
+        <button class="nav-tab-btn" data-section="section-symptoms" id="nav-btn-symptoms">3. Symptoms</button>
+        <button class="nav-tab-btn" data-section="section-photoguide" id="nav-btn-photo">4. Photo Guide</button>
+        <button class="nav-tab-btn" data-section="section-riskevaluator" id="nav-btn-risk">5. Diagnostic Engine</button>
+        <button class="nav-tab-btn" data-section="section-medicalguidance" id="nav-btn-guidance">6. Clinical Guidance</button>
+        <button class="nav-tab-btn" data-section="section-nutrition" id="nav-btn-nutrition">7. Nutrition</button>
+        <button class="nav-tab-btn" data-section="section-tracker" id="nav-btn-tracker">8. Daily Regimen</button>
+      </nav>
+
+      <!-- Nav Controls: Language Switcher, Font Scaling, Dark/Light Mode -->
+      <div class="nav-controls">
+        <button class="btn btn-accent" id="lang-toggle-btn" style="padding:0.45rem 1rem; font-size:0.85rem;" title="Switch Language between English and Sinhala (සිංහල)">🌐 සිංහල</button>
+        <button class="btn btn-secondary btn-icon" id="font-scale-btn" title="Adjust Text Size">A+</button>
+        <button class="btn btn-secondary btn-icon" id="theme-toggle-btn" title="Toggle Dark/Light Theme">☀️</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App Content Container -->
+  <main class="app-container" style="flex:1;">
+
+    <!-- SECTION 1: HOME LAYOUT & DASHBOARD -->
+    <section class="section-wrapper active" id="section-home">
+      <div class="section-header">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h1 class="section-title" id="hero-title-text">AnemiCare Diagnostic Suite 🩺</h1>
+            <p class="section-subtitle" id="hero-sub-text">Clinical Anemia Diagnostic Assistant, Non-Invasive Eye Pallor & Nail Biomarker Evaluation, Nutrition Protocol, and Intake Regimen.</p>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <span class="badge badge-teal">Bilingual • English & සිංහල</span>
+            <span class="badge badge-red">Clinical Engine</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Health Tip Banner -->
+      <div class="glass-panel card-padding" style="margin-bottom:1.5rem; background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(7, 12, 26, 0.7)); border-color: rgba(0, 242, 254, 0.35);">
+        <p id="daily-health-tip" style="font-size:0.98rem; color:var(--text-main); font-weight:600; transition: opacity 0.3s ease; margin:0;">
+          💡 Pair your plant-based iron meals (spinach, lentils) with Vitamin C (lemon juice, oranges) to increase non-heme bioavailability by up to 300%!
+        </p>
+      </div>
+
+      <!-- Dashboard 5-Card Layout Grid -->
+      <div class="dashboard-grid">
+        
+        <!-- Card 1: Symptoms & Eye Color Quick Check -->
+        <div class="glass-panel card-padding col-span-7">
+          <div class="card-header">
+            <h3 class="card-title" id="quick-eye-title">👁️ Conjunctival Pallor & Symptom Biomarkers</h3>
+            <button class="btn btn-secondary quick-nav-btn" data-target="section-symptoms" style="padding:0.35rem 0.85rem; font-size:0.8rem;">Edit Symptoms</button>
+          </div>
+          <p style="font-size:0.92rem; margin-bottom:1.25rem; line-height:1.6;" id="quick-eye-sub">Examine your inner lower eyelid under natural illumination. Reduced palpebral conjunctiva redness serves as a primary clinical indicator of decreased hemoglobin concentration.</p>
+          <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+            <button class="btn btn-primary quick-nav-btn" data-target="section-photoguide" id="btn-eye-guide">View Eye Photo Guide</button>
+            <button class="btn btn-accent quick-nav-btn" data-target="section-riskevaluator" id="btn-run-engine">Run Diagnostic Engine</button>
+          </div>
+        </div>
+
+        <!-- Card 2: Risk Meter Dial Widget -->
+        <div class="glass-panel card-padding col-span-5">
+          <div class="card-header">
+            <h3 class="card-title" id="quick-meter-title">🎯 Clinical Diagnostic Risk Meter</h3>
+            <button class="btn btn-secondary quick-nav-btn" data-target="section-riskevaluator" id="btn-full-gauge" style="padding:0.35rem 0.85rem; font-size:0.8rem;">Full Gauge</button>
+          </div>
+          <div id="dashboard-risk-meter-container"></div>
+        </div>
+
+        <!-- Card 3: Visual Inspection Photo Guide Preview -->
+        <div class="glass-panel card-padding col-span-4">
+          <h3 class="card-title" style="margin-bottom:0.75rem;" id="quick-photo-title">💅 Physical Inspection Signs</h3>
+          <p style="font-size:0.88rem; margin-bottom:1rem;" id="quick-photo-sub">Evaluate palpebral eyelid conjunctival pallor and spoon nail plate curvature (Koilonychia).</p>
+          <button class="btn btn-accent quick-nav-btn" data-target="section-photoguide" id="btn-open-gallery" style="width:100%;">Open Inspection Gallery</button>
+        </div>
+
+        <!-- Card 4: Nutrition & Meal Plan Preview -->
+        <div class="glass-panel card-padding col-span-4">
+          <h3 class="card-title" style="margin-bottom:0.75rem;" id="quick-nutri-title">🥗 Therapeutic Iron Protocols</h3>
+          <p style="font-size:0.88rem; margin-bottom:1rem;" id="quick-nutri-sub">Heme vs Non-Heme food database and bioavailable cooking recipes.</p>
+          <button class="btn btn-secondary quick-nav-btn" data-target="section-nutrition" id="btn-explore-food" style="width:100%;">Explore Nutrition Guide</button>
+        </div>
+
+        <!-- Card 5: Daily Supplement & Hydration Tracker Preview -->
+        <div class="glass-panel card-padding col-span-4">
+          <h3 class="card-title" style="margin-bottom:0.75rem;" id="quick-track-title">⏰ Therapeutic Dosage Regimen</h3>
+          <p style="font-size:0.88rem; margin-bottom:1rem;" id="quick-track-sub">Track daily iron dose, water intake, and set precision countdown alerts.</p>
+          <button class="btn btn-secondary quick-nav-btn" data-target="section-tracker" id="btn-open-tracker" style="width:100%;">Open Dosage Tracker</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: DESCRIPTION ABOUT ANEMIA -->
+    <section class="section-wrapper" id="section-description">
+      <div class="section-header">
+        <h1 class="section-title" id="sec2-title">2. Pathophysiology & Etiology 📚</h1>
+        <p class="section-subtitle" id="sec2-sub">Clinical pathophysiology of hemoglobin synthesis, tissue hypoxia, and non-invasive diagnostic classifications.</p>
+      </div>
+      <div id="anemia-description-container"></div>
+    </section>
+
+    <!-- SECTION 3: SYMPTOMS BREAKDOWN -->
+    <section class="section-wrapper" id="section-symptoms">
+      <div class="section-header">
+        <h1 class="section-title" id="sec3-title">3. Symptom Biomarkers Checklist 📋</h1>
+        <p class="section-subtitle" id="sec3-sub">Select active clinical signs and subjective symptoms to calculate your diagnostic evaluation index.</p>
+      </div>
+      <div id="symptoms-container"></div>
+    </section>
+
+    <!-- SECTION 4: PHOTO INSPECTION GUIDE (EYES & NAILS) -->
+    <section class="section-wrapper" id="section-photoguide">
+      <div class="section-header">
+        <h1 class="section-title" id="sec4-title">4. Photo Guide: Eye & Nail Inspection 👁️💅</h1>
+        <p class="section-subtitle" id="sec4-sub">Standardized visual photo comparison reference for lower eyelid conjunctival pallor and koilonychia.</p>
+      </div>
+
+      <div style="margin-bottom:2rem;">
+        <h3 id="photo-eye-heading" style="margin-bottom:1rem; color:var(--accent-teal);">Part 1: Palpebral Conjunctival Pallor Check</h3>
+        <p id="photo-eye-sub" style="margin-bottom:1rem;">Gently retract your lower eyelid in natural lighting. Select the reference card matching your inner eyelid shade:</p>
+        <div id="eye-photo-cards"></div>
+      </div>
+
+      <div style="margin-bottom:2rem;">
+        <h3 id="photo-nail-heading" style="margin-bottom:1rem; color:var(--accent-teal);">Part 2: Nail Plate &amp; Koilonychia Assessment</h3>
+        <p id="photo-nail-sub" style="margin-bottom:1rem;">Inspect fingernail plate curvature and press the nail bed for capillary refill evaluation:</p>
+        <div id="nail-photo-cards"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: NON-INVASIVE RISK LEVEL EVALUATOR -->
+    <section class="section-wrapper" id="section-riskevaluator">
+      <div class="section-header">
+        <h1 class="section-title" id="sec5-title">5. Clinical Diagnostic Engine 🎯</h1>
+        <p class="section-subtitle" id="sec5-sub">Real-time non-invasive diagnostic algorithm evaluating symptoms, eye pallor, and nail biomarkers.</p>
+      </div>
+
+      <div class="glass-panel card-padding">
+        <div id="risk-evaluator-meter-container"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: MEDICAL CARE & GUIDANCE -->
+    <section class="section-wrapper" id="section-medicalguidance">
+      <div class="section-header">
+        <h1 class="section-title" id="sec6-title">6. Clinical Guidance & Physician Report 🏥</h1>
+        <p class="section-subtitle" id="sec6-sub">Emergency red flag protocol, clinical advice, and printable diagnostic consultation report.</p>
+      </div>
+
+      <div id="doctor-worksheet-container"></div>
+    </section>
+
+    <!-- SECTION 7: NUTRITION, MEALS & FOOD INFO -->
+    <section class="section-wrapper" id="section-nutrition">
+      <div class="section-header">
+        <h1 class="section-title" id="sec7-title">7. Therapeutic Nutrition &amp; Meals 🥗</h1>
+        <p class="section-subtitle" id="sec7-sub">Non-Veg, Vegetarian &amp; Vegan iron food database, absorption enhancers (Vitamin C), daily iron calculator, and meal plan widgets.</p>
+      </div>
+
+      <!-- Daily Iron Requirements Calculator Widget -->
+      <div id="iron-calculator-widget-container"></div>
+
+      <!-- Diet Type Filter Buttons: All / Non-Veg / Veg / Vegan -->
+      <div id="diet-filter-widgets-container"></div>
+
+      <!-- Iron Food Database Grid -->
+      <div id="food-db-container" style="margin-bottom:2rem;"></div>
+
+      <!-- Meal Plan Widget Tabs -->
+      <div id="meal-plan-display" style="margin-bottom:2rem;"></div>
+    </section>
+
+    <!-- SECTION 8: DAILY TRACKER & REMINDERS -->
+    <section class="section-wrapper" id="section-tracker">
+      <div class="section-header">
+        <h1 class="section-title" id="sec8-title">8. Daily Therapeutic Regimen ⏰</h1>
+        <p class="section-subtitle" id="sec8-sub">Log iron supplement dosage, hydration index, energy scale, and set precision countdown alerts.</p>
+      </div>
+      <div id="tracker-module-container"></div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer style="border-top:1px solid var(--glass-border); padding:2rem 0; margin-top:3rem; text-align:center; color:var(--text-subtle); font-size:0.88rem;">
+    <div class="app-container">
+      <p style="margin-bottom:0.5rem;"><strong>AnemiCare Diagnostic Suite</strong> — English & Sinhala (සිංහල) Clinical Assessment Application.</p>
+      <p style="font-size:0.8rem; color:var(--text-subtle);">Built with HTML5, CSS3, and JavaScript. All diagnostic logs remain private in your browser local memory.</p>
+    </div>
+  </footer>
+
+  <!-- Standalone Application Bundle Script -->
+
+  <script>
+/* AnemiCare Clinical Medical Diagnostic Suite
+   Bilingual Engine: English & Sinhala (සිංහල)
+   Version: 3.0 - Complete with Nutrition Widgets (Non-Veg / Veg / Vegan)
+   ============================================================ */
+
+(function () {
+  'use strict';
+
+  /* ==========================================
+     1. BILINGUAL TRANSLATION DICTIONARIES
+     ========================================== */
+  let currentLang = localStorage.getItem('anemicare_lang') || 'en';
+
+  const TRANSLATIONS = {
+    en: {
+      brandSub: 'Diagnostic',
+      navHome: '1. Dashboard',
+      navAbout: '2. Pathophysiology',
+      navSymptoms: '3. Symptoms',
+      navPhoto: '4. Photo Guide',
+      navRisk: '5. Diagnostic Engine',
+      navGuidance: '6. Clinical Guidance',
+      navNutrition: '7. Nutrition',
+      navTracker: '8. Daily Regimen',
+      langBtnLabel: '🌐 සිංහල',
+      disclaimer: '🏥 Clinical Diagnostic Evaluation Suite: AnemiCare evaluates physical biomarkers (eye conjunctival pallor & nail bed koilonychia) and symptoms for clinical awareness & screening.',
+      heroTitle: 'AnemiCare Diagnostic Suite 🩺',
+      heroSub: 'Clinical Anemia Diagnostic Assistant — Non-Invasive Eye Pallor & Nail Biomarker Evaluation, Nutrition Protocol, and Intake Regimen.',
+      healthTip: '💡 Pair your plant-based iron meals (spinach, lentils) with Vitamin C (lemon juice, oranges) to increase non-heme iron bioavailability by up to 300%!',
+      quickEye: '👁️ Conjunctival Pallor & Symptom Biomarkers',
+      quickEyeSub: 'Examine your inner lower eyelid under natural illumination. Reduced palpebral conjunctiva redness is a primary clinical indicator of decreased hemoglobin concentration.',
+      btnEyeGuide: 'View Eye Photo Guide',
+      btnRunEngine: 'Run Diagnostic Engine',
+      quickMeter: '🎯 Clinical Diagnostic Risk Meter',
+      btnFullGauge: 'Full Gauge',
+      quickPhoto: '💅 Physical Inspection Signs',
+      quickPhotoSub: 'Evaluate palpebral eyelid conjunctival pallor and spoon nail plate curvature (Koilonychia).',
+      btnOpenGallery: 'Open Inspection Gallery',
+      quickNutri: '🥗 Therapeutic Iron Protocols',
+      quickNutriSub: 'Non-Veg, Vegetarian & Vegan iron food database and bioavailable meal plans.',
+      btnExploreFood: 'Explore Nutrition Guide',
+      quickTrack: '⏰ Therapeutic Dosage Regimen',
+      quickTrackSub: 'Track daily iron dose, water intake, and set precision countdown alerts.',
+      btnOpenTracker: 'Open Dosage Tracker',
+      sec2Title: '2. Pathophysiology & Etiology 📚',
+      sec2Sub: 'Clinical pathophysiology of hemoglobin synthesis, tissue hypoxia, and non-invasive diagnostic classifications.',
+      sec3Title: '3. Symptom Biomarkers Checklist 📋',
+      sec3Sub: 'Select active clinical signs and subjective symptoms to calculate your diagnostic evaluation index.',
+      sec4Title: '4. Photo Guide: Eye & Nail Inspection 👁️💅',
+      sec4Sub: 'Standardized visual photo comparison reference for lower eyelid conjunctival pallor and koilonychia.',
+      sec5Title: '5. Clinical Diagnostic Engine 🎯',
+      sec5Sub: 'Real-time non-invasive diagnostic algorithm evaluating symptoms, eye pallor, and nail biomarkers.',
+      sec6Title: '6. Clinical Guidance & Physician Report 🏥',
+      sec6Sub: 'Emergency red flag protocol, clinical advice, and printable diagnostic consultation report.',
+      sec7Title: '7. Therapeutic Nutrition & Meals 🥗',
+      sec7Sub: 'Non-Veg, Vegetarian & Vegan iron food database, absorption enhancers (Vitamin C), daily iron calculator, and meal plan widgets.',
+      sec8Title: '8. Daily Therapeutic Regimen ⏰',
+      sec8Sub: 'Log iron supplement dosage, hydration index, energy scale, and set precision countdown alerts.',
+      lowTier: '🟡 Yellow • No / Low Risk',
+      modTier: '🟢 Green • Medium Risk',
+      highTier: '🔴 Red • High Risk',
+      lowRec: 'Diagnostic Assessment: Negative for severe visual pallor or symptomatic indicators. Probability of clinical anemia is low. Continue maintaining a high-iron diet.',
+      modRec: 'Diagnostic Assessment: Moderate risk factors detected. Mild conjunctival eyelid pallor or secondary symptoms observed. Clinical consultation and dietary review recommended.',
+      highRec: 'Diagnostic Assessment: High clinical risk indication. Significant conjunctival pallor, koilonychia, or severe physical symptoms present. Prompt medical checkup is strongly advised.',
+      eyePart1: 'Part 1: Palpebral Conjunctival Pallor Check',
+      eyePart1Sub: 'Gently retract your lower eyelid in natural lighting. Select the reference card that matches your inner eyelid shade:',
+      nailPart2: 'Part 2: Nail Plate & Koilonychia Assessment',
+      nailPart2Sub: 'Inspect fingernail plate curvature and press the nail bed for capillary refill evaluation:',
+      worksheetTitle: 'AnemiCare Official Clinical Diagnostic Summary Report',
+      printBtn: '🖨️ Print / Save Medical PDF',
+      worksheetScore: 'Score',
+      worksheetSymptoms: 'Symptoms',
+      worksheetConfidence: 'Confidence',
+      trackerTitle: '📝 Daily Therapeutic Intake & Energy Log',
+      ironSuppTitle: '💊 Elemental Iron Supplement (Daily Regimen)',
+      ironSuppSub: 'Administer alongside ascorbic acid (Vitamin C). Avoid co-ingestion with calcium, tea, or coffee.',
+      hydrationTitle: '💧 Systemic Hydration Index',
+      hydrationSub: 'Target: 8 glasses daily to optimize vascular volume and oxygen transport.',
+      energyLabel: '⚡ Self-Reported Subjective Energy Scale (1 to 10)',
+      timerTitle: '⏰ Clinical Dosage Timer',
+      timerSub: 'Set a precision countdown timer for therapeutic supplement administration.',
+      timerNoActive: 'No active timer set',
+      timerAlert: '⏰ Time for your Iron Supplement! Take with Vitamin C.'
+    },
+    si: {
+      brandSub: 'රෝග විනිශ්චය',
+      navHome: '1. මුල් පිටුව',
+      navAbout: '2. ඇනීමියා හැඳින්වීම',
+      navSymptoms: '3. රෝග ලක්ෂණ',
+      navPhoto: '4. ඡායාරූප මාර්ගෝපදේශය',
+      navRisk: '5. රෝග විනිශ්චය',
+      navGuidance: '6. වෛද්‍ය උපදෙස්',
+      navNutrition: '7. පෝෂණය හා ආහාර',
+      navTracker: '8. දෛනික සටහන',
+      langBtnLabel: '🌐 English',
+      disclaimer: '🏥 සායනික රෝග විනිශ්චය පද්ධතිය: AnemiCare ඇසේ යට පැහැය (ඇසිපිය ඇතුලත සුදුමැලි බව) සහ නියපොතු පරීක්ෂාව මගින් රක්තහීනතාවය ඉක්මනින් හඳුනා ගැනීමට දායකවේ.',
+      heroTitle: 'AnemiCare රෝග විනිශ්චය පද්ධතිය 🩺',
+      heroSub: 'ඇනීමියා (රක්තහීනතාවය) ඇස් සහ නියපොතු මගින් හඳුනා ගැනීම, යකඩ බහුල පෝෂණ මාර්ගෝපදේශය සහ දෛනික ඖෂධ සටහන.',
+      healthTip: '💡 නිවිති, පරිප්පු වැනි ශාකමය ආහාරවලට දෙහි ඉස්ම (විටමින් C) එක් කිරීමෙන් යකඩ අවශෝෂණය 300% දක්වා ඉහළ නංවාගත හැකිය!',
+      quickEye: '👁️ ඇස යට පැහැය සහ රෝග ලක්ෂණ පරීක්ෂාව',
+      quickEyeSub: 'ස්වාභාවික ආලෝකයෙන් ඔබේ පහළ ඇසිපිය ඇතුලත පරීක්ෂා කරන්න. රෝස පැහැය අඩුවී සුදුමැලි වීම රක්තහීනතාවයේ ප්‍රධාන ලක්ෂණයකි.',
+      btnEyeGuide: 'ඇසේ ඡායාරූප බලන්න',
+      btnRunEngine: 'රෝග විනිශ්චය බලන්න',
+      quickMeter: '🎯 රෝග විනිශ්චය අවදානම් මානය',
+      btnFullGauge: 'සම්පූර්ණ මානය',
+      quickPhoto: '💅 ශාරීරික නිරීක්ෂණ ලක්ෂණ',
+      quickPhotoSub: 'ඇසිපිය ඇතුලත සුදුමැලි බව සහ හැඳි හැඩැති නියපොතු (Koilonychia) පරීක්ෂා කරන්න.',
+      btnOpenGallery: 'ඡායාරූප එකතුව',
+      quickNutri: '🥗 යකඩ බහුල ආහාර සැලසුම',
+      quickNutriSub: 'නොන්-වෙජ්, වෙජිටේරියන් සහ වීගන් යකඩ ආහාර හා ගණක යන්ත්‍රය.',
+      btnExploreFood: 'ආහාර මාර්ගෝපදේශය',
+      quickTrack: '⏰ ඖෂධ සහ දෛනික සටහන',
+      quickTrackSub: 'දිනපතා යකඩ පෙති, ජලය සහ ශක්ති මට්ටම සටහන් කර මතක් කිරීම් තබන්න.',
+      btnOpenTracker: 'දෛනික සටහන',
+      sec2Title: '2. ඇනීමියා රෝග භෞතික විද්‍යාව 📚',
+      sec2Sub: 'හිමොග්ලොබින් සංස්ලේෂණය, ඔක්සිජන් ඌනතාවය සහ රක්තහීනතාවයේ වර්ග පිළිබඳ විස්තරය.',
+      sec3Title: '3. රෝග ලක්ෂණ ලැයිස්තුව 📋',
+      sec3Sub: 'ඔබට දැනෙන රෝග ලක්ෂණ තේරීමෙන් ඔබේ රෝග විනිශ්චය අවදානම් අගය ගණනය කරන්න.',
+      sec4Title: '4. ඡායාරූප මාර්ගෝපදේශය (ඇස් සහ නිය) 👁️💅',
+      sec4Sub: 'ඇසිපිය ඇතුලත පැහැය සහ හැඳි හැඩැති නියපොතු පරීක්ෂා කිරීමට ඡායාරූප මාර්ගෝපදේශය.',
+      sec5Title: '5. රෝග විනිශ්චය යන්ත්‍රය 🎯',
+      sec5Sub: 'රෝග ලක්ෂණ, ඇස් පැහැය සහ නියපොතු ලක්ෂණ අනුව රියල් ටයිම් රෝග විනිශ්චය.',
+      sec6Title: '6. සායනික උපදෙස් සහ වෛද්‍ය වාර්තාව 🏥',
+      sec6Sub: 'අවදානම් ලක්ෂණ, වෛද්‍ය උපදෙස් සහ මුද්‍රණය කළ හැකි වෛද්‍ය සාකච්ඡා වාර්තාව.',
+      sec7Title: '7. පෝෂණය සහ යකඩ බහුල ආහාර 🥗',
+      sec7Sub: 'නොන්-වෙජ්, වෙජිටේරියන් සහ වීගන් යකඩ ආහාර, දෛනික යකඩ ගණකය, සහ ආහාර සැලසුම්.',
+      sec8Title: '8. දෛනික සටහන සහ මතක් කිරීම් ⏰',
+      sec8Sub: 'දිනපතා යකඩ පෙති, ජල ප්‍රමාණය, ශක්ති මට්ටම සහ මතක් කිරීමේ ටයිමරය.',
+      lowTier: '🟡 කහ • අවදානම ඉතා අඩුයි',
+      modTier: '🟢 කොළ • මධ්‍යම අවදානම',
+      highTier: '🔴 රතු • අධික අවදානම',
+      lowRec: 'රෝග විනිශ්චය: තද සුදුමැලි බවක් හෝ බරපතල රෝග ලක්ෂණ නොමැත. රක්තහීනතාවය තිබීමේ අවදානම ඉතා අඩුයි. යකඩ බහුල ආහාර වේලක් පවත්වා ගන්න.',
+      modRec: 'රෝග විනිශ්චය: මධ්‍යම අවදානම් ලක්ෂණ හඳුනාගෙන ඇත. මඳ සුදුමැලි බවක් හෝ රෝග ලක්ෂණ ඇත. වෛද්‍ය උපදෙස් ලබා ගැනීම සුදුසුය.',
+      highRec: 'රෝග විනිශ්චය: අධික රෝග අවදානමක් පෙන්නුම් කරයි. ඇස් යට තද සුදුමැලි බවක් හෝ හැඳි නියපොතු ඇත. වහාම වෛද්‍යවරයෙකු හමුවී රුධිර පරීක්ෂාවක් කරගන්න.',
+      eyePart1: 'කොටස 1: ඇසිපිය ඇතුලත සුදුමැලි බව පරීක්ෂා කිරීම',
+      eyePart1Sub: 'ස්වාභාවික ආලෝකයෙන් ඔබේ පහළ ඇසිපිය ඇදාගෙන ඇතුළත පැහැය බලන්න. ඔබේ ඇසේ ඇතුළත රූපයට සමාන කාඩ්පත් තෝරන්න:',
+      nailPart2: 'කොටස 2: නියපොතු (Koilonychia) තක්සේරුව',
+      nailPart2Sub: 'නියපොතු හැඩය සහ ඔබේ නියපොතු ඔබන විට රතු-රෝස පැහැය ඉවත්ව යාමේ කාලය (capillary refill) පරීක්ෂා කරන්න:',
+      worksheetTitle: 'AnemiCare වෛද්‍ය සාකච්ඡා වාර්තාව',
+      printBtn: '🖨️ වාර්තාව මුද්‍රණය කරන්න (Print/PDF)',
+      worksheetScore: 'ලකුණු',
+      worksheetSymptoms: 'රෝග ලක්ෂණ',
+      worksheetConfidence: 'විශ්වාසදායකත්වය',
+      trackerTitle: '📝 දෛනික ඖෂධ සහ ශක්ති සටහන',
+      ironSuppTitle: '💊 දිනපතා යකඩ ඖෂධ',
+      ironSuppSub: 'විටමින් C (දෙහි ඉස්ම) සමඟ ගන්න. කිරි, ශාකමය ළමා ආහාර, ටී සමඟ නොගන්න.',
+      hydrationTitle: '💧 දෛනික ජල ප්‍රමාණය',
+      hydrationSub: 'ඉලක්කය: ශරීරයේ ඔක්සිජන් ගමනාගමනය ඉහළ නැංවීමට දිනකට වීදුරු 8ක් ජලය පානය කරන්න.',
+      energyLabel: '⚡ ශරීර ශක්ති මට්ටම (1 සිට 10 දක්වා)',
+      timerTitle: '⏰ ඖෂධ ගැනීමේ ටයිමරය',
+      timerSub: 'යකඩ ඖෂධ ගැනීමේ නිශ්චිත කාල ගණන ටයිමරයක් සකසන්න.',
+      timerNoActive: 'ටයිමරයක් සකසා නැත',
+      timerAlert: '⏰ ඔබේ යකඩ ඖෂධ ගැනීමට කාලයයි! විටමින් C (දෙහි ඉස්ම) සමඟ ගන්න.'
+    }
+  };
+
+  /* ==========================================
+     2. CLINICAL DATASETS
+     ========================================== */
+  const ANEMIA_TYPES = [
+    {
+      name: 'Iron Deficiency Anemia (IDA)',
+      frequency: 'Most Common Worldwide • 50% of all anemia cases',
+      cause: 'Inadequate dietary iron intake, chronic blood loss (menstruation, GI bleeding), or malabsorption in coeliac disease.',
+      symptoms: 'Fatigue, pallor, koilonychia (spoon nails), pagophagia (ice cravings), angular cheilitis (mouth corner sores), and dysphagia.',
+      nonInvasiveAction: 'Assess conjunctival pallor + koilonychia. Start high-iron diet (meat, spinach, lentils) + Vitamin C co-ingestion. Begin oral iron supplement protocol.'
+    },
+    {
+      name: 'Vitamin B12 Deficiency Anemia',
+      frequency: 'Common • Especially in Vegan / Elderly populations',
+      cause: 'Insufficient dietary B12 (vegans, vegetarians), intrinsic factor deficiency (Pernicious Anemia), or gastric acid reduction.',
+      symptoms: 'Macrocytic anemia, glossitis (red inflamed tongue), peripheral neuropathy, subacute combined degeneration, megaloblastic changes.',
+      nonInvasiveAction: 'Examine tongue for glossitis. Check for neurological symptoms. Recommend B12 supplementation (cyanocobalamin 1000 mcg daily) + fortified foods.'
+    },
+    {
+      name: 'Folate / Folic Acid Deficiency',
+      frequency: 'Common • Especially during pregnancy',
+      cause: 'Low dietary folate (leafy greens, legumes), alcohol abuse, pregnancy demands, or methotrexate/phenytoin drug interactions.',
+      symptoms: 'Megaloblastic anemia, glossitis, fatigue, neural tube defects in pregnancy, diarrhea.',
+      nonInvasiveAction: 'Increase green leafy vegetables, legumes, fortified cereals. Folic acid 400-800 mcg supplement daily. Critical in pregnant women.'
+    },
+    {
+      name: 'Anemia of Chronic Disease (ACD)',
+      frequency: 'Second Most Common in Hospitalized Patients',
+      cause: 'Inflammatory cytokines suppress erythropoiesis and iron utilization in chronic disease: rheumatoid arthritis, CKD, cancer, or chronic infections.',
+      symptoms: 'Mild normocytic anemia, fatigue, pallor. Underlying condition-specific symptoms dominate.',
+      nonInvasiveAction: 'Manage the underlying condition. Monitor physical pallor and symptom progression. Avoid aggressive iron supplementation without medical supervision.'
+    },
+    {
+      name: 'Aplastic / Sickle Cell Anemia',
+      frequency: 'Less Common • Genetic / Bone Marrow Failure',
+      cause: 'Autoimmune bone marrow failure (Aplastic) or inherited hemoglobin mutation causing rigid, crescent-shaped RBCs (Sickle Cell).',
+      symptoms: 'Severe pallor, painful vaso-occlusive crises (SCA), organ damage, extremely low WBC/platelet count (Aplastic).',
+      nonInvasiveAction: 'Immediate specialist referral. This app provides pallor/symptom awareness only — these conditions require comprehensive hematology evaluation.'
+    }
+  ];
+
+  const SYMPTOMS_LIST = [
+    { id: 'fatigue', nameEn: 'Persistent Clinical Fatigue & Weakness', nameSi: 'අධික තෙහෙට්ටුව සහ ශරීර දුර්වලතාවය', icon: '⚡', descEn: 'Unusual exhaustion that does not improve with rest.', descSi: 'විවේක ගත්තද නොහැරෙන අධික තෙහෙට්ටුව.', weight: 15 },
+    { id: 'pale_skin', nameEn: 'Cutaneous Pallor & Mucosal Paleness', nameSi: 'සම සහ විදුරුමස් සුදුමැලි වීම', icon: '👤', descEn: 'Loss of healthy reddish skin tone.', descSi: 'සමේ සාමාන්‍ය රෝස පැහැය නැතිවී සුදුමැලි වීම.', weight: 20 },
+    { id: 'eye_pallor', nameEn: 'Conjunctival Pallor (Lower Eyelid)', nameSi: 'ඇස යට (ඇසිපිය ඇතුලත) සුදුමැලි වීම', icon: '👁️', descEn: 'Inner lower eyelid appears pale or white.', descSi: 'පහළ ඇසිපිය ඇතුලත රෝස පැහැය නැතිවී සුදු වීම.', weight: 25 },
+    { id: 'dizziness', nameEn: 'Cerebral Hypoxia / Dizziness', nameSi: 'කරකැවිල්ල සහ ක්ලාන්ත ගතිය', icon: '🌀', descEn: 'Feeling faint or unsteady when standing up.', descSi: 'කෙලින් සිටගන්නා විට එන කරකැවිල්ල.', weight: 12 },
+    { id: 'shortness_breath', nameEn: 'Exertional Dyspnea (Breathlessness)', nameSi: 'මහන්සි වන විට හුස්ම ගැනීමේ අමාරුව', icon: '🫁', descEn: 'Breathing difficulty during routine walking.', descSi: 'පඩිපෙළ නගින විට හුස්ම තදවීම.', weight: 18 },
+    { id: 'cold_extremities', nameEn: 'Peripheral Cold Hands & Feet', nameSi: 'අත් පා නිතරම සීතල වීම', icon: '❄️', descEn: 'Chilly fingers and toes due to low oxygen.', descSi: 'රුධිර ගමනාගමනය අඩුවීමෙන් අත් පා සීතල වීම.', weight: 10 },
+    { id: 'spoon_nails', nameEn: 'Koilonychia (Spoon-Shaped Nails)', nameSi: 'හැඳි හැඩැති නියපොතු (Koilonychia)', icon: '💅', descEn: 'Concave nail plates dipping like a spoon.', descSi: 'නියපොතු මැදින් යටට ගිලී හැන්දක් සේ සැකසීම.', weight: 20 },
+    { id: 'palpitations', nameEn: 'Compensatory Tachycardia (Racing Heart)', nameSi: 'හෘද ස්පන්දනය වේගවත් වීම', icon: '💓', descEn: 'Heart racing to pump available oxygen.', descSi: 'හදවත වේගයෙන් ගැහෙන බව දැනීම.', weight: 15 },
+    { id: 'pica', nameEn: 'Pagophagia / Pica (Ice Cravings)', nameSi: 'අයිස්, පස් හෝ කැට විකීමේ ආශාව (Pica)', icon: '🧊', descEn: 'Compulsive urge to chew ice or clay.', descSi: 'අයිස් කැට හෝ පස් විකීමට එන තද ආශාව.', weight: 15 },
+    { id: 'cheilitis', nameEn: 'Angular Cheilitis & Glossitis', nameSi: 'තොල් දෙකොන තුවාල වීම සහ දිව ඉදිමීම', icon: '👄', descEn: 'Painful sores at corners of the mouth.', descSi: 'කට දෙකොන පැලීම සහ දිව රතු වී ඉදිමීම.', weight: 10 }
+  ];
+
+  const EYE_PALLOR_LEVELS = [
+    { id: 'healthy', labelEn: 'Normal Pink Conjunctiva', labelSi: 'සාමාන්‍ය රෝස පැහැය', score: 0, svgType: 'pink', descEn: 'Rich reddish-pink inner lower eyelid. No pallor.', descSi: 'ඇසිපිය ඇතුලත රතු/රෝස පැහැයෙන් යුක්තයි. සාමාන්‍ය.' },
+    { id: 'mild', labelEn: 'Mild Eyelid Pallor', labelSi: 'මඳ සුදුමැලි බව', score: 20, svgType: 'mild', descEn: 'Faded pink inner eyelid color. Mild concern.', descSi: 'ඇසිපිය ඇතුලත රෝස පැහැය අඩුවී ඇත. මඳ සැකයක් ඇත.' },
+    { id: 'severe', labelEn: 'Severe White Pallor', labelSi: 'තද සුදුමැලි බව (සුදු පාට)', score: 40, svgType: 'severe', descEn: 'Distinctly pale/whitish conjunctiva. Significant clinical indicator.', descSi: 'ඇසිපිය ඇතුලත රතු පැහැය නැතිවී සුදු. වැදගත් ලක්ෂණයකි.' }
+  ];
+
+  const NAIL_LEVELS = [
+    { id: 'normal', labelEn: 'Normal Pink Nail Bed', labelSi: 'සාමාන්‍ය රෝස නියපොතු', score: 0, descEn: 'Smooth nail plate with healthy pink nail bed.', descSi: 'සාමාන්‍ය නියපොතු රෝස පැහැය.' },
+    { id: 'pale_bed', labelEn: 'Pale Nail Bed', labelSi: 'සුදුමැලි නියපොතු', score: 15, descEn: 'Faded nail bed, slow capillary refill under pressure.', descSi: 'ඔබන විට රෝස පැහැය ඉක්මනින් නොඑයි.' },
+    { id: 'spoon_nails', labelEn: 'Spoon Nails (Koilonychia)', labelSi: 'හැඳි හැඩැති නියපොතු', score: 30, descEn: 'Concave, spooned nail plates. Key IDA indicator.', descSi: 'නියපොතු හැන්දක් සේ මැදින් ගිලී ඇත. IDA ප්‍රධාන ලක්ෂණය.' }
+  ];
+
+  const FOOD_DATABASE = [
+    // Non-Veg (Heme Iron)
+    { nameEn: 'Lean Beef Steak', nameSi: 'ගව මස් (Lean Beef)', dietTag: 'non-veg', iron: '2.7 mg', type: 'Heme', icon: '🥩', tipEn: 'Heme iron boasts 3x higher intestinal absorption than plant iron.', tipSi: 'ශරීරයට ශාකමය යකඩ වලට වඩා 3 ගුණයක් ඉක්මනින් අවශෝෂණය වේ.' },
+    { nameEn: 'Chicken Breast / Thigh', nameSi: 'කුකුළු මස් (Chicken)', dietTag: 'non-veg', iron: '1.3 mg', type: 'Heme', icon: '🍗', tipEn: 'Lean animal protein source high in heme iron and B12.', tipSi: 'යකඩ සහ විටමින් B12 බහුල හොඳ ප්‍රෝටීන් ප්‍රභවයකි.' },
+    { nameEn: 'Pan-Seared Salmon', nameSi: 'සැමන් මාළු (Salmon)', dietTag: 'non-veg', iron: '1.2 mg', type: 'Heme', icon: '🐟', tipEn: 'Contains Omega-3 fatty acids alongside heme iron.', tipSi: 'ඔමේගා-3 සහ හේම් යකඩ බහුල මාළු වර්ගයකි.' },
+    { nameEn: 'Boiled Eggs (2 whole)', nameSi: 'බිත්තර (Eggs)', dietTag: 'non-veg', iron: '1.8 mg', type: 'Heme & Non-Heme', icon: '🥚', tipEn: 'Contains iron, Vitamin B12, choline and essential amino acids.', tipSi: 'යකඩ, විටමින් B12, කොලීන් බහුලයි.' },
+    // Vegetarian
+    { nameEn: 'Spinach (Cooked)', nameSi: 'නිවිති (Spinach)', dietTag: 'veg', iron: '3.6 mg', type: 'Non-Heme', icon: '🥬', tipEn: 'Pair with Vitamin C (lemon juice) to boost absorption by 300%.', tipSi: 'දෙහි ඉස්ම ස්වල්පයක් එකතු කිරීමෙන් අවශෝෂණය 3 ගුණ වේ.' },
+    { nameEn: 'Cooked Lentils (Dahl)', nameSi: 'පරිප්පු (Lentils)', dietTag: 'veg', iron: '3.3 mg', type: 'Non-Heme', icon: '🫘', tipEn: 'High protein and folate; cook with tomatoes for better absorption.', tipSi: 'තක්කාලි සමඟ පිසීමෙන් යකඩ අවශෝෂණය වැඩිවේ.' },
+    { nameEn: 'Paneer / Dairy Cheese', nameSi: 'පනීර් / චීස් (Paneer)', dietTag: 'veg', iron: '0.8 mg', type: 'Non-Heme', icon: '🧀', tipEn: 'Good calcium and protein; combine with legumes for iron balance.', tipSi: 'කළු බෝංචි සමඟ ගැනීමෙන් සමබරතාවය ලැබේ.' },
+    { nameEn: 'Broccoli', nameSi: 'බ්‍රොකලි (Broccoli)', dietTag: 'veg', iron: '1.0 mg', type: 'Non-Heme', icon: '🥦', tipEn: 'Also contains Vitamin C naturally — excellent dual-action food.', tipSi: 'ස්වාභාවිකව විටමින් C ද ඇත — ද්විත්ව ක්‍රිය ආහාරයකි.' },
+    // Vegan
+    { nameEn: 'Pumpkin Seeds', nameSi: 'වට්ටක්කා ඇට (Pumpkin Seeds)', dietTag: 'vegan', iron: '2.5 mg', type: 'Non-Heme', icon: '🎃', tipEn: 'Rich in zinc, magnesium alongside iron. Excellent vegan snack.', tipSi: 'සින්ක්, මැග්නීසියම් සහ යකඩ බහුල නිවේගී ආහාරයකි.' },
+    { nameEn: 'Firm Tofu', nameSi: 'ටෝෆු (Tofu)', dietTag: 'vegan', iron: '2.4 mg', type: 'Non-Heme', icon: '🧊', tipEn: 'Excellent vegan protein source rich in non-heme iron.', tipSi: 'වීගන් ප්‍රෝටීන් සහ යකඩ ලබා ගැනීමට ඉතා සුදුසුය.' },
+    { nameEn: 'Black Beans & Chickpeas', nameSi: 'කඩල සහ කළු බෝංචි', dietTag: 'vegan', iron: '2.8 mg', type: 'Non-Heme', icon: '🫛', tipEn: 'High fiber, protein, and bioavailable plant iron.', tipSi: 'ශාකමය යකඩ, තන්තු සහ ප්‍රෝටීන් බහුලයි.' },
+    { nameEn: 'Dark Chocolate (70%+)', nameSi: 'ඩාක් චොකලට් (70%+)', dietTag: 'vegan', iron: '3.4 mg', type: 'Non-Heme', icon: '🍫', tipEn: 'Flavonoid-rich vegan iron booster. Enjoy in moderation.', tipSi: 'ඇන්ටිඔක්සිඩන්ට් සහ ශාකමය යකඩ බහුලයි. සීමිතව ගන්න.' }
+  ];
+
+  const MEAL_PLANS = {
+    'non-veg': {
+      titleEn: '🥩 Non-Veg High-Heme Iron Protocol',
+      titleSi: '🥩 නොන්-වෙජ් (මාංශ) යකඩ ආහාර සැලසුම',
+      breakfastEn: 'Spinach & Bell Pepper Omelet (2 eggs) + 1 glass fresh orange juice.',
+      breakfastSi: 'නිවිති සහ රතු මිරිස් සහිත බිත්තර ඔම්ලට් + දොඩම් යුෂ වීදුරුවක්.',
+      lunchEn: 'Grilled Lean Beef or Chicken with Lentil & Spinach Grain Bowl + lemon dressing.',
+      lunchSi: 'ගව/කුකුළු මස් + පරිප්පු නිවිති බත් පාත්‍රය + දෙහි ඉස්ම.',
+      dinnerEn: 'Pan-seared Salmon or Steak with roasted asparagus and sweet potatoes.',
+      dinnerSi: 'සැමන් හෝ මස් + ඇස්පරගස් + බතල.',
+      snackEn: 'Boiled egg + handful of pumpkin seeds.',
+      snackSi: 'තැම්බූ බිත්තරයක් + වට්ටක්කා ඇට.'
+    },
+    'veg': {
+      titleEn: '🥗 Vegetarian Iron & Vitamin C Protocol',
+      titleSi: '🥗 වෙජිටේරියන් යකඩ සහ විටමින් C ආහාර සැලසුම',
+      breakfastEn: 'Fortified Oats with pumpkin seeds, sliced strawberries, and chia seeds.',
+      breakfastSi: 'ඕට්ස් + වට්ටක්කා ඇට + ස්ට්‍රෝබෙරි + චියා ඇට.',
+      lunchEn: 'Warm Lentil & Chickpea Dahl with brown rice and fresh spinach salad.',
+      lunchSi: 'පරිප්පු සහ කඩල හොද්ද + රතු බත් + නිවිති සලාදය.',
+      dinnerEn: 'Paneer & Broccoli Stir-Fry with bell peppers in ginger garlic sauce.',
+      dinnerSi: 'පනීර් සහ බ්‍රොකලි + ඉඟුරු සුදුලූනු.',
+      snackEn: 'Sliced kiwi + roasted almonds.',
+      snackSi: 'කිවි + බැදපු අමන්ඩ් ඇට.'
+    },
+    'vegan': {
+      titleEn: '🌱 100% Vegan Plant-Based Iron Powerhouse',
+      titleSi: '🌱 වීගන් (100% ශාකමය) යකඩ බලගැන්වුම',
+      breakfastEn: 'Green Smoothie: Spinach, frozen mango, orange juice, flaxseed, pumpkin seeds.',
+      breakfastSi: 'කොළ ස්මූති: නිවිති + අඹ + දොඩම් යුෂ + හණ ඇට + වට්ටක්කා ඇට.',
+      lunchEn: 'Black Bean & Quinoa Bowl with fresh tomato salsa and avocado.',
+      lunchSi: 'කළු බෝංචි + කිනෝවා + තක්කාලි සල්සා + ඇවකාඩෝ.',
+      dinnerEn: 'Tofu & Edamame Coconut Curry with spinach and jasmine rice.',
+      dinnerSi: 'ටෝෆු + එඩමාමේ + පොල්කිරි කරිය + නිවිති.',
+      snackEn: 'Dried apricots + dark chocolate pieces + pumpkin seeds.',
+      snackSi: 'වියළි ඇප්රිකොට් + ඩාක් චොකලට් + වට්ටක්කා ඇට.'
+    }
+  };
+
+  /* ==========================================
+     3. STATE MANAGEMENT & STORAGE
+     ========================================== */
+  let selectedSymptoms = new Set(JSON.parse(localStorage.getItem('anemicare_selected_symptoms') || '[]'));
+  let selectedEyeLevel = localStorage.getItem('anemicare_eye_level') || 'healthy';
+  let selectedNailLevel = localStorage.getItem('anemicare_nail_level') || 'normal';
+  let selectedDietFilter = 'all';
+  let trackerData = JSON.parse(localStorage.getItem('anemicare_tracker_logs') || JSON.stringify({
+    ironSupplementChecked: false,
+    waterGlasses: 4,
+    energyLevel: 6
+  }));
+  let reminderTimer = null;
+  let timerSecondsRemaining = 0;
+
+  /* ==========================================
+     4. ROUTING & TAB NAVIGATION
+     ========================================== */
+  function switchSection(sectionId) {
+    document.querySelectorAll('.section-wrapper').forEach(sec => {
+      sec.classList.toggle('active', sec.id === sectionId);
+    });
+    document.querySelectorAll('.nav-tab-btn').forEach(tab => {
+      tab.classList.toggle('active', tab.getAttribute('data-section') === sectionId);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateCalculatedViews();
+  }
+
+  /* ==========================================
+     5. DIAGNOSTIC RISK ENGINE
+     ========================================== */
+  function calculateRiskScore() {
+    let score = 0;
+    selectedSymptoms.forEach(symId => {
+      const item = SYMPTOMS_LIST.find(s => s.id === symId);
+      if (item) score += item.weight;
+    });
+    const eyeItem = EYE_PALLOR_LEVELS.find(e => e.id === selectedEyeLevel);
+    if (eyeItem) score += eyeItem.score;
+    const nailItem = NAIL_LEVELS.find(n => n.id === selectedNailLevel);
+    if (nailItem) score += nailItem.score;
+    score = Math.min(100, Math.round(score));
+    const confidenceScore = Math.min(98, Math.round(60 + selectedSymptoms.size * 4));
+    const t = TRANSLATIONS[currentLang];
+    let tier = 'low', tierLabel = t.lowTier, tierColor = 'var(--risk-low)', recommendation = t.lowRec;
+    if (score >= 35 && score < 65) { tier = 'moderate'; tierLabel = t.modTier; tierColor = 'var(--risk-moderate)'; recommendation = t.modRec; }
+    else if (score >= 65) { tier = 'high'; tierLabel = t.highTier; tierColor = 'var(--risk-high)'; recommendation = t.highRec; }
+    return { score, tier, tierLabel, tierColor, recommendation, selectedCount: selectedSymptoms.size, confidenceScore };
+  }
+
+  function renderRiskMeter(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const r = calculateRiskScore();
+    container.innerHTML = `
+      <div class="risk-meter-container">
+        <div class="gauge-svg-wrapper">${renderArcGaugeSvg(r.score, r.tierColor)}</div>
+        <div class="gauge-score-value" style="color:${r.tierColor};">${r.score}<span style="font-size:1.2rem;font-weight:500;">/100</span></div>
+        <div class="risk-level-badge risk-level-${r.tier}">${r.tierLabel}</div>
+        <div style="margin-top:0.75rem;"><span class="badge badge-teal">${currentLang === 'si' ? 'රෝග විනිශ්චය අගය' : 'Clinical Diagnostic Index'} • ${r.confidenceScore}% Match</span></div>
+        <p style="text-align:center;margin-top:1.25rem;font-size:0.95rem;max-width:520px;line-height:1.6;">${r.recommendation}</p>
+      </div>`;
+  }
+
+  function renderArcGaugeSvg(score, activeColor) {
+    const rad = ((score / 100) * 180 - 180) * (Math.PI / 180);
+    const nx = 140 + 90 * Math.cos(rad), ny = 140 + 90 * Math.sin(rad);
+    return `<svg viewBox="0 0 280 160" width="100%" height="100%">
+      <path d="M 20 140 A 120 120 0 0 1 100 36" fill="none" stroke="#ffb703" stroke-width="18" opacity="0.35" stroke-linecap="round"/>
+      <path d="M 104 33 A 120 120 0 0 1 176 33" fill="none" stroke="#00e676" stroke-width="18" opacity="0.35" stroke-linecap="round"/>
+      <path d="M 180 36 A 120 120 0 0 1 260 140" fill="none" stroke="#ff1744" stroke-width="18" opacity="0.35" stroke-linecap="round"/>
+      <line x1="140" y1="140" x2="${nx}" y2="${ny}" stroke="${activeColor}" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="140" cy="140" r="11" fill="${activeColor}"/>
+      <circle cx="140" cy="140" r="4" fill="#ffffff"/>
+      <text x="22" y="155" fill="#ffb703" font-size="10" font-weight="bold">${currentLang === 'si' ? 'අඩු' : 'LOW'}</text>
+      <text x="140" y="22" text-anchor="middle" fill="#00e676" font-size="10" font-weight="bold">${currentLang === 'si' ? 'මධ්‍යම' : 'MEDIUM'}</text>
+      <text x="258" y="155" text-anchor="end" fill="#ff1744" font-size="10" font-weight="bold">${currentLang === 'si' ? 'වැඩි' : 'HIGH'}</text>
+    </svg>`;
+  }
+
+  function updateCalculatedViews() {
+    renderRiskMeter('dashboard-risk-meter-container');
+    renderRiskMeter('risk-evaluator-meter-container');
+    renderDoctorWorksheet();
+  }
+
+  /* ==========================================
+     6. RENDER FUNCTIONS
+     ========================================== */
+
+  function renderSymptoms() {
+    const container = document.getElementById('symptoms-container');
+    if (!container) return;
+    container.innerHTML = `<div class="symptom-grid">
+      ${SYMPTOMS_LIST.map(sym => {
+        const isChecked = selectedSymptoms.has(sym.id);
+        const name = currentLang === 'si' ? sym.nameSi : sym.nameEn;
+        const desc = currentLang === 'si' ? sym.descSi : sym.descEn;
+        return `<label class="symptom-checkbox-card ${isChecked ? 'selected' : ''}" data-id="${sym.id}">
+          <input type="checkbox" value="${sym.id}" ${isChecked ? 'checked' : ''}/>
+          <div class="symptom-info"><h5>${sym.icon} ${name}</h5><p>${desc}</p></div>
+        </label>`;
+      }).join('')}</div>`;
+    container.querySelectorAll('input[type="checkbox"]').forEach(chk => {
+      chk.addEventListener('change', e => {
+        const id = e.target.value;
+        const card = container.querySelector(`.symptom-checkbox-card[data-id="${id}"]`);
+        if (e.target.checked) { selectedSymptoms.add(id); card?.classList.add('selected'); }
+        else { selectedSymptoms.delete(id); card?.classList.remove('selected'); }
+        localStorage.setItem('anemicare_selected_symptoms', JSON.stringify([...selectedSymptoms]));
+        updateCalculatedViews();
+      });
+    });
+  }
+
+  function renderEyeSvg(type, label) {
+    const c = type === 'pink' ? '#ff4d6d' : type === 'mild' ? '#ff99ac' : '#f8f9fa';
+    return `<svg viewBox="0 0 300 180" width="100%" height="100%">
+      <rect width="300" height="180" fill="#f8c8a0" rx="8"/>
+      <path d="M 50 90 Q 150 20 250 90 Q 150 160 50 90 Z" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+      <circle cx="150" cy="90" r="38" fill="#334155"/>
+      <circle cx="150" cy="90" r="16" fill="#000000"/>
+      <path d="M 60 100 Q 150 170 240 100 Q 150 145 60 100 Z" fill="${c}" stroke="#b91c1c" stroke-width="1.5"/>
+      <rect x="40" y="142" width="220" height="24" rx="12" fill="rgba(0,0,0,0.65)"/>
+      <text x="150" y="158" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">${label}</text>
+    </svg>`;
+  }
+
+  function renderNailSvg(id, label) {
+    const nc = id === 'normal' ? '#ffa6c9' : id === 'pale_bed' ? '#f1f5f9' : '#e2e8f0';
+    const cp = id === 'spoon_nails' ? 'M 100 70 Q 150 120 200 70 L 190 130 Q 150 150 110 130 Z' : 'M 100 60 Q 150 40 200 60 L 190 130 Q 150 150 110 130 Z';
+    return `<svg viewBox="0 0 300 180" width="100%" height="100%">
+      <rect width="300" height="180" fill="#f0c0a0" rx="8"/>
+      <path d="M 80 180 L 80 50 Q 150 20 220 50 L 220 180 Z" fill="#e8b090" stroke="#d09070" stroke-width="2"/>
+      <path d="${cp}" fill="${nc}" stroke="#cbd5e1" stroke-width="2"/>
+      <rect x="40" y="142" width="220" height="24" rx="12" fill="rgba(0,0,0,0.65)"/>
+      <text x="150" y="158" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">${label}</text>
+    </svg>`;
+  }
+
+  function renderPhotoGuide() {
+    const eyeEl = document.getElementById('eye-photo-cards');
+    const nailEl = document.getElementById('nail-photo-cards');
+    const t = TRANSLATIONS[currentLang];
+
+    // Update Part headings
+    const eyeH = document.getElementById('photo-eye-heading');
+    const eyeP = document.getElementById('photo-eye-sub');
+    const nailH = document.getElementById('photo-nail-heading');
+    const nailP = document.getElementById('photo-nail-sub');
+    if (eyeH) eyeH.textContent = t.eyePart1;
+    if (eyeP) eyeP.textContent = t.eyePart1Sub;
+    if (nailH) nailH.textContent = t.nailPart2;
+    if (nailP) nailP.textContent = t.nailPart2Sub;
+
+    if (eyeEl) {
+      eyeEl.innerHTML = `<div class="photo-comparison-grid">
+        ${EYE_PALLOR_LEVELS.map(lv => {
+          const label = currentLang === 'si' ? lv.labelSi : lv.labelEn;
+          const desc = currentLang === 'si' ? lv.descSi : lv.descEn;
+          return `<div class="inspection-card ${selectedEyeLevel === lv.id ? 'selected' : ''}" data-id="${lv.id}">
+            <div class="inspection-img-wrapper">${renderEyeSvg(lv.svgType, label)}</div>
+            <h4>${label}</h4><p>${desc}</p></div>`;
+        }).join('')}</div>`;
+      eyeEl.querySelectorAll('.inspection-card').forEach(card => {
+        card.addEventListener('click', () => {
+          selectedEyeLevel = card.getAttribute('data-id');
+          localStorage.setItem('anemicare_eye_level', selectedEyeLevel);
+          eyeEl.querySelectorAll('.inspection-card').forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          updateCalculatedViews();
+        });
+      });
+    }
+
+    if (nailEl) {
+      nailEl.innerHTML = `<div class="photo-comparison-grid">
+        ${NAIL_LEVELS.map(nl => {
+          const label = currentLang === 'si' ? nl.labelSi : nl.labelEn;
+          const desc = currentLang === 'si' ? nl.descSi : nl.descEn;
+          return `<div class="inspection-card ${selectedNailLevel === nl.id ? 'selected' : ''}" data-id="${nl.id}">
+            <div class="inspection-img-wrapper">${renderNailSvg(nl.id, label)}</div>
+            <h4>${label}</h4><p>${desc}</p></div>`;
+        }).join('')}</div>`;
+      nailEl.querySelectorAll('.inspection-card').forEach(card => {
+        card.addEventListener('click', () => {
+          selectedNailLevel = card.getAttribute('data-id');
+          localStorage.setItem('anemicare_nail_level', selectedNailLevel);
+          nailEl.querySelectorAll('.inspection-card').forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          updateCalculatedViews();
+        });
+      });
+    }
+  }
+
+  function renderDescription() {
+    const container = document.getElementById('anemia-description-container');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="glass-panel card-padding" style="margin-bottom:1.5rem;">
+        <h3 style="color:var(--accent-teal);margin-bottom:0.75rem;">Medical Pathophysiology of Anemia</h3>
+        <p style="font-size:1rem;line-height:1.7;">Anemia is defined clinically as a decrease in total red blood cell (RBC) mass or hemoglobin concentration below reference thresholds. Hemoglobin serves as the primary metalloprotein transporting oxygen from pulmonary alveoli to systemic tissue capillary beds.</p>
+        <p style="font-size:1rem;line-height:1.7;">When tissue hypoxia develops, peripheral clinical biomarkers emerge—most notably <strong>conjunctival pallor</strong> (pallor of the palpebral eyelid lining) and <strong>koilonychia</strong> (spooning of nail plates due to iron-dependent epithelial atrophy).</p>
+      </div>
+      <h3 style="margin-bottom:1rem;">Differential Diagnostic Categories</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;">
+        ${ANEMIA_TYPES.map(type => `
+          <div class="glass-panel card-padding">
+            <span class="badge badge-teal" style="margin-bottom:0.5rem;">${type.frequency}</span>
+            <h4 style="margin-bottom:0.5rem;font-size:1.1rem;">${type.name}</h4>
+            <p style="font-size:0.88rem;margin-bottom:0.5rem;"><strong>Etiology:</strong> ${type.cause}</p>
+            <p style="font-size:0.88rem;margin-bottom:0.75rem;"><strong>Findings:</strong> ${type.symptoms}</p>
+            <div style="background:rgba(0,242,254,0.1);padding:0.75rem;border-radius:var(--border-radius-sm);border:1px solid rgba(0,242,254,0.25);">
+              <p style="font-size:0.82rem;color:var(--accent-teal);margin:0;">💡 <strong>Intervention:</strong> ${type.nonInvasiveAction}</p>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  function renderDoctorWorksheet() {
+    const container = document.getElementById('doctor-worksheet-container');
+    if (!container) return;
+    const r = calculateRiskScore();
+    const t = TRANSLATIONS[currentLang];
+    const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const symptoms = [...selectedSymptoms].map(id => SYMPTOMS_LIST.find(s => s.id === id)).filter(Boolean);
+    container.innerHTML = `
+      <div class="glass-panel card-padding printable-area">
+        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--glass-border);padding-bottom:1rem;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+          <div><h3 style="color:var(--accent-teal);">${t.worksheetTitle}</h3><p style="font-size:0.85rem;margin:0;">Generated ${today}</p></div>
+          <button class="btn btn-secondary btn-print" id="print-worksheet-btn">${t.printBtn}</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:1.5rem;">
+          <div style="background:rgba(0,0,0,0.25);padding:1rem;border-radius:var(--border-radius-sm);text-align:center;">
+            <p style="font-size:0.75rem;color:var(--text-subtle);font-weight:700;text-transform:uppercase;margin:0 0 0.35rem;">${t.worksheetScore}</p>
+            <div style="font-size:1.8rem;font-weight:800;color:${r.tierColor};">${r.score}/100</div>
+            <span class="badge risk-level-${r.tier}">${r.tierLabel}</span>
+          </div>
+          <div style="background:rgba(0,0,0,0.25);padding:1rem;border-radius:var(--border-radius-sm);text-align:center;">
+            <p style="font-size:0.75rem;color:var(--text-subtle);font-weight:700;text-transform:uppercase;margin:0 0 0.35rem;">${t.worksheetSymptoms}</p>
+            <div style="font-size:1.8rem;font-weight:800;">${r.selectedCount}</div>
+            <p style="font-size:0.8rem;margin:0;">active biomarkers</p>
+          </div>
+          <div style="background:rgba(0,0,0,0.25);padding:1rem;border-radius:var(--border-radius-sm);text-align:center;">
+            <p style="font-size:0.75rem;color:var(--text-subtle);font-weight:700;text-transform:uppercase;margin:0 0 0.35rem;">${t.worksheetConfidence}</p>
+            <div style="font-size:1.8rem;font-weight:800;color:var(--accent-teal);">${r.confidenceScore}%</div>
+            <p style="font-size:0.8rem;margin:0;">match index</p>
+          </div>
+        </div>
+        ${symptoms.length > 0 ? `
+          <h4 style="margin-bottom:0.75rem;">Reported Biomarkers:</h4>
+          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem;">
+            ${symptoms.map(s => `<span class="badge badge-teal">${s.icon} ${currentLang === 'si' ? s.nameSi : s.nameEn}</span>`).join('')}
+          </div>` : ''}
+        <h4 style="margin-bottom:0.75rem;">Questions for Your Doctor:</h4>
+        <ol style="font-size:0.9rem;line-height:1.8;padding-left:1.25rem;">
+          <li>Based on my symptoms and eye/nail pallor assessment, do you recommend a Complete Blood Count (CBC)?</li>
+          <li>Should we measure Serum Ferritin and Total Iron-Binding Capacity (TIBC) to quantify iron stores?</li>
+          <li>Which iron formulation (Ferrous Bisglycinate vs. Ferrous Sulfate) offers the best absorption for me?</li>
+          <li>How can I prevent GI side effects during iron therapy (nausea, constipation)?</li>
+          <li>Are any of my current medications impairing intestinal iron absorption?</li>
+          <li>When should we schedule a follow-up to track my pallor recovery and energy levels?</li>
+        </ol>
+        <div style="margin-top:1.5rem;padding:1rem;background:rgba(255,23,68,0.1);border:1px solid rgba(255,23,68,0.3);border-radius:var(--border-radius-sm);">
+          <p style="font-size:0.85rem;color:var(--primary-red);margin:0;font-weight:600;">⚠️ Disclaimer: This report is for educational screening awareness only. It does not constitute a medical diagnosis. Always consult a licensed physician for clinical evaluation and treatment.</p>
+        </div>
+      </div>`;
+    document.getElementById('print-worksheet-btn')?.addEventListener('click', () => window.print());
+  }
+
+  /* ==========================================
+     7. NUTRITION WIDGETS (Non-Veg / Veg / Vegan)
+     ========================================== */
+  function renderNutritionWidgets() {
+    renderIronCalculator();
+    renderDietFilterBtns();
+    renderFoodGrid(document.getElementById('food-db-container'), selectedDietFilter);
+    renderMealPlan(document.getElementById('meal-plan-display'), 'non-veg');
+  }
+
+  function renderIronCalculator() {
+    const el = document.getElementById('iron-calculator-widget-container');
+    if (!el) return;
+    const t = TRANSLATIONS[currentLang];
+    el.innerHTML = `
+      <div class="glass-panel card-padding" style="background:linear-gradient(135deg,rgba(0,242,254,0.08),rgba(7,12,26,0.6));border-color:rgba(0,242,254,0.3);margin-bottom:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem;">
+          <div>
+            <h3 style="color:var(--accent-teal);font-size:1.2rem;">${currentLang === 'si' ? '🧮 දෛනික යකඩ අවශ්‍යතා ගණක යන්ත්‍රය' : '🧮 Daily Iron Requirement Calculator'}</h3>
+            <p style="font-size:0.85rem;margin:0;">${currentLang === 'si' ? 'ඔබේ ලිංගය, ජීවිත අවධිය, සහ ආහාර රටාව අනුව නිර්දේශිත දෛනික යකඩ ප්‍රමාණය ගණනය කරන්න.' : 'Calculate your recommended daily iron intake based on your gender, life stage, and dietary pattern.'}</p>
+          </div>
+          <span class="badge badge-teal">${currentLang === 'si' ? 'WHO/NIH' : 'WHO/NIH Guidelines'}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;">
+          <div>
+            <label style="font-size:0.82rem;font-weight:600;color:var(--text-subtle);display:block;margin-bottom:0.35rem;">${currentLang === 'si' ? 'ලිංගය / ජීවිත අවධිය' : 'Gender / Life Stage'}</label>
+            <select id="calc-gender-select" class="btn btn-secondary" style="width:100%;border-radius:10px;font-size:0.85rem;padding:0.5rem 0.85rem;">
+              <option value="female_adult">${currentLang === 'si' ? 'කාන්තා (19-50y) • 18mg' : 'Female Adult (19-50y) • 18 mg'}</option>
+              <option value="male_adult">${currentLang === 'si' ? 'පිරිමි (19-50y) • 8mg' : 'Male Adult (19-50y) • 8 mg'}</option>
+              <option value="pregnant">${currentLang === 'si' ? 'ගැබිනි (Pregnant) • 27mg' : 'Pregnant • 27 mg'}</option>
+              <option value="teen_female">${currentLang === 'si' ? 'නව යොවුන් ගැහැනු (14-18y) • 15mg' : 'Teen Female (14-18y) • 15 mg'}</option>
+              <option value="teen_male">${currentLang === 'si' ? 'නව යොවුන් පිරිමි (14-18y) • 11mg' : 'Teen Male (14-18y) • 11 mg'}</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.82rem;font-weight:600;color:var(--text-subtle);display:block;margin-bottom:0.35rem;">${currentLang === 'si' ? 'ආහාර රටාව (Diet Type)' : 'Dietary Pattern'}</label>
+            <select id="calc-diet-select" class="btn btn-secondary" style="width:100%;border-radius:10px;font-size:0.85rem;padding:0.5rem 0.85rem;">
+              <option value="non-veg">${currentLang === 'si' ? '🥩 නොන්-වෙජ් (Heme Iron — 1x)' : '🥩 Non-Veg (Heme Iron — 1x multiplier)'}</option>
+              <option value="veg">${currentLang === 'si' ? '🥗 වෙජිටේරියන් (Non-Heme — 1.8x)' : '🥗 Vegetarian (Non-Heme — 1.8x NIH)'}</option>
+              <option value="vegan">${currentLang === 'si' ? '🌱 වීගන් 100% (Non-Heme — 1.8x)' : '🌱 100% Vegan (Non-Heme — 1.8x NIH)'}</option>
+            </select>
+          </div>
+          <div style="background:rgba(0,242,254,0.12);padding:0.9rem;border-radius:12px;border:1px solid rgba(0,242,254,0.3);text-align:center;display:flex;flex-direction:column;justify-content:center;">
+            <span style="font-size:0.72rem;color:var(--text-subtle);font-weight:700;text-transform:uppercase;">${currentLang === 'si' ? 'ඔබේ නිර්දේශිත ඉලක්කය' : 'Your Recommended Target'}</span>
+            <div id="calc-target-output" style="font-size:1.75rem;font-weight:800;color:var(--accent-teal);">18 mg/day</div>
+            <span style="font-size:0.72rem;color:var(--text-subtle);">${currentLang === 'si' ? 'දිනකට' : 'per day'}</span>
+          </div>
+        </div>
+      </div>`;
+
+    const genderSel = el.querySelector('#calc-gender-select');
+    const dietSel = el.querySelector('#calc-diet-select');
+    const outputEl = el.querySelector('#calc-target-output');
+    const BASE_IRON = { female_adult: 18, male_adult: 8, pregnant: 27, teen_female: 15, teen_male: 11 };
+    const updateCalc = () => {
+      let base = BASE_IRON[genderSel.value] || 18;
+      if (dietSel.value === 'veg' || dietSel.value === 'vegan') base = Math.round(base * 1.8);
+      outputEl.textContent = `${base} mg/day`;
+    };
+    genderSel?.addEventListener('change', updateCalc);
+    dietSel?.addEventListener('change', updateCalc);
+  }
+
+  function renderDietFilterBtns() {
+    const el = document.getElementById('diet-filter-widgets-container');
+    if (!el) return;
+    const counts = { all: FOOD_DATABASE.length, 'non-veg': 0, veg: 0, vegan: 0 };
+    FOOD_DATABASE.forEach(f => counts[f.dietTag]++);
+    el.innerHTML = `<div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+      ${[
+        { key: 'all', icon: '🌐', labelEn: 'All Foods', labelSi: 'සියල්ල' },
+        { key: 'non-veg', icon: '🥩', labelEn: 'Non-Veg (Heme)', labelSi: 'නොන්-වෙජ්' },
+        { key: 'veg', icon: '🥗', labelEn: 'Vegetarian', labelSi: 'වෙජිටේරියන්' },
+        { key: 'vegan', icon: '🌱', labelEn: '100% Vegan', labelSi: 'වීගන්' }
+      ].map(btn => `
+        <button class="btn diet-filter-btn ${selectedDietFilter === btn.key ? 'btn-primary' : 'btn-secondary'}" data-diet="${btn.key}">
+          ${btn.icon} ${currentLang === 'si' ? btn.labelSi : btn.labelEn} (${counts[btn.key]})
+        </button>`).join('')}
+    </div>`;
+    el.querySelectorAll('.diet-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedDietFilter = btn.getAttribute('data-diet');
+        el.querySelectorAll('.diet-filter-btn').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-secondary'); });
+        btn.classList.remove('btn-secondary'); btn.classList.add('btn-primary');
+        renderFoodGrid(document.getElementById('food-db-container'), selectedDietFilter);
+      });
+    });
+  }
+
+  function renderFoodGrid(container, filter) {
+    if (!container) return;
+    const filtered = filter === 'all' ? FOOD_DATABASE : FOOD_DATABASE.filter(f => f.dietTag === filter);
+    const badgeColors = { 'non-veg': 'badge-red', veg: 'badge-amber', vegan: 'badge-teal' };
+    const dietLabels = { 'non-veg': 'Non-Veg', veg: 'Veg', vegan: 'Vegan' };
+    container.innerHTML = `<div class="food-grid">
+      ${filtered.map(food => `
+        <div class="glass-panel food-card">
+          <div class="food-icon">${food.icon}</div>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+              <h5 style="font-size:1rem;">${currentLang === 'si' ? food.nameSi : food.nameEn}</h5>
+              <span class="badge ${badgeColors[food.dietTag] || 'badge-teal'}">${dietLabels[food.dietTag]} • ${food.type}</span>
+            </div>
+            <p style="font-size:0.88rem;color:var(--accent-teal);font-weight:700;margin:0.2rem 0;">🩺 Iron: ${food.iron} per serving</p>
+            <p style="font-size:0.8rem;color:var(--text-subtle);margin:0;">${currentLang === 'si' ? food.tipSi : food.tipEn}</p>
+          </div>
+        </div>`).join('')}
+    </div>`;
+  }
+
+  function renderMealPlan(container, planKey) {
+    if (!container) return;
+    const plan = MEAL_PLANS[planKey] || MEAL_PLANS['non-veg'];
+    const title = currentLang === 'si' ? plan.titleSi : plan.titleEn;
+    const meals = [
+      { icon: '🍳', labelEn: 'Breakfast', labelSi: 'උදෑසන ආහාරය', en: plan.breakfastEn, si: plan.breakfastSi, badge: 'badge-amber' },
+      { icon: '🍱', labelEn: 'Lunch', labelSi: 'දිවා ආහාරය', en: plan.lunchEn, si: plan.lunchSi, badge: 'badge-teal' },
+      { icon: '🍲', labelEn: 'Dinner', labelSi: 'රාත්‍රී ආහාරය', en: plan.dinnerEn, si: plan.dinnerSi, badge: 'badge-red' },
+      { icon: '🍎', labelEn: 'Snacks', labelSi: 'සුළු ආහාර', en: plan.snackEn, si: plan.snackSi, badge: 'badge-teal' }
+    ];
+    container.innerHTML = `
+      <div class="glass-panel card-padding">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.75rem;">
+          <h3 style="color:var(--accent-teal);">${title}</h3>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <button class="btn meal-plan-tab ${planKey === 'non-veg' ? 'btn-primary' : 'btn-secondary'}" data-plan="non-veg">🥩 Non-Veg</button>
+            <button class="btn meal-plan-tab ${planKey === 'veg' ? 'btn-primary' : 'btn-secondary'}" data-plan="veg">🥗 Veg</button>
+            <button class="btn meal-plan-tab ${planKey === 'vegan' ? 'btn-primary' : 'btn-secondary'}" data-plan="vegan">🌱 Vegan</button>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;">
+          ${meals.map(m => `
+            <div style="background:rgba(0,0,0,0.25);padding:1rem;border-radius:var(--border-radius-sm);">
+              <span class="badge ${m.badge}" style="margin-bottom:0.5rem;">${m.icon} ${currentLang === 'si' ? m.labelSi : m.labelEn}</span>
+              <p style="font-size:0.88rem;margin:0;">${currentLang === 'si' ? m.si : m.en}</p>
+            </div>`).join('')}
+        </div>
+        <div style="margin-top:1rem;padding:0.75rem;background:rgba(0,242,254,0.08);border-radius:var(--border-radius-sm);border:1px solid rgba(0,242,254,0.2);">
+          <p style="font-size:0.82rem;color:var(--accent-teal);margin:0;">💡 ${currentLang === 'si' 
+            ? 'ශාකමය ආහාර (Non-Heme) ගත් විට දෙහි/දොඩම් ගන්න. කිරි, ශාකජ ලෙස (Tea, Coffee) ඒ ආසන්නව ගැනීම වළකින්න.'
+            : 'Always pair Non-Heme plant iron with Vitamin C (citrus fruits/lemon). Avoid tea, coffee, or calcium within 2 hours of iron-rich meals.'}</p>
+        </div>
+      </div>`;
+    container.querySelectorAll('.meal-plan-tab').forEach(tab => {
+      tab.addEventListener('click', () => renderMealPlan(container, tab.getAttribute('data-plan')));
+    });
+  }
+
+  function renderTracker() {
+    const container = document.getElementById('tracker-module-container');
+    if (!container) return;
+    const t = TRANSLATIONS[currentLang];
+    container.innerHTML = `
+      <div class="dashboard-grid">
+        <div class="glass-panel card-padding col-span-7">
+          <h3 class="card-title" style="margin-bottom:1.25rem;">${t.trackerTitle}</h3>
+          <div class="tracker-item">
+            <div>
+              <h5 style="font-size:1rem;">${t.ironSuppTitle}</h5>
+              <p style="font-size:0.8rem;margin:0;">${t.ironSuppSub}</p>
+            </div>
+            <input type="checkbox" id="iron-supp-check" ${trackerData.ironSupplementChecked ? 'checked' : ''} style="width:24px;height:24px;accent-color:var(--primary-red);cursor:pointer;"/>
+          </div>
+          <div class="tracker-item">
+            <div>
+              <h5 style="font-size:1rem;">${t.hydrationTitle}</h5>
+              <p style="font-size:0.8rem;margin:0;">${t.hydrationSub}</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <button class="btn btn-secondary" id="water-minus-btn" style="padding:0.25rem 0.75rem;">−</button>
+              <span id="water-count-display" style="font-size:1.2rem;font-weight:800;color:var(--accent-teal);">${trackerData.waterGlasses}/8</span>
+              <button class="btn btn-secondary" id="water-plus-btn" style="padding:0.25rem 0.75rem;">+</button>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;">
+              <label style="font-weight:600;font-size:0.92rem;">${t.energyLabel}</label>
+              <span id="energy-val-display" style="font-weight:800;color:var(--accent-teal);">${trackerData.energyLevel}/10</span>
+            </div>
+            <input type="range" id="energy-slider" min="1" max="10" value="${trackerData.energyLevel}" style="width:100%;accent-color:var(--accent-teal);cursor:pointer;"/>
+          </div>
+        </div>
+        <div class="glass-panel card-padding col-span-5">
+          <h3 class="card-title" style="margin-bottom:1.25rem;">${t.timerTitle}</h3>
+          <p style="font-size:0.88rem;margin-bottom:1rem;">${t.timerSub}</p>
+          <div style="text-align:center;padding:1.5rem 0;">
+            <div class="timer-display" id="timer-countdown-text">00:00:00</div>
+            <p style="font-size:0.8rem;color:var(--text-subtle);margin-top:0.35rem;" id="timer-status-text">${t.timerNoActive}</p>
+          </div>
+          <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-secondary" id="timer-set-1h">1 ${currentLang === 'si' ? 'පැය' : 'Hour'}</button>
+            <button class="btn btn-secondary" id="timer-set-4h">4 ${currentLang === 'si' ? 'පැය' : 'Hours'}</button>
+            <button class="btn btn-accent" id="timer-custom-btn">${currentLang === 'si' ? 'පරීක්ෂා (10 min)' : '10 Min Test'}</button>
+          </div>
+        </div>
+      </div>`;
+
+    document.getElementById('iron-supp-check')?.addEventListener('change', e => {
+      trackerData.ironSupplementChecked = e.target.checked;
+      localStorage.setItem('anemicare_tracker_logs', JSON.stringify(trackerData));
+    });
+    const wMinus = document.getElementById('water-minus-btn');
+    const wPlus = document.getElementById('water-plus-btn');
+    const wDisp = document.getElementById('water-count-display');
+    wMinus?.addEventListener('click', () => { if (trackerData.waterGlasses > 0) { trackerData.waterGlasses--; wDisp.textContent = `${trackerData.waterGlasses}/8`; localStorage.setItem('anemicare_tracker_logs', JSON.stringify(trackerData)); } });
+    wPlus?.addEventListener('click', () => { if (trackerData.waterGlasses < 15) { trackerData.waterGlasses++; wDisp.textContent = `${trackerData.waterGlasses}/8`; localStorage.setItem('anemicare_tracker_logs', JSON.stringify(trackerData)); } });
+    document.getElementById('energy-slider')?.addEventListener('input', e => {
+      trackerData.energyLevel = parseInt(e.target.value);
+      document.getElementById('energy-val-display').textContent = `${trackerData.energyLevel}/10`;
+      localStorage.setItem('anemicare_tracker_logs', JSON.stringify(trackerData));
+    });
+    const timerText = document.getElementById('timer-countdown-text');
+    const timerStatus = document.getElementById('timer-status-text');
+    document.getElementById('timer-set-1h')?.addEventListener('click', () => startTimer(3600, timerText, timerStatus));
+    document.getElementById('timer-set-4h')?.addEventListener('click', () => startTimer(14400, timerText, timerStatus));
+    document.getElementById('timer-custom-btn')?.addEventListener('click', () => startTimer(600, timerText, timerStatus));
+  }
+
+  function startTimer(seconds, textEl, statusEl) {
+    if (reminderTimer) clearInterval(reminderTimer);
+    timerSecondsRemaining = seconds;
+    const t = TRANSLATIONS[currentLang];
+    if (statusEl) statusEl.textContent = currentLang === 'si' ? 'ටයිමරය ක්‍රියාත්මකයි!' : 'Timer active — notification on completion.';
+    updateTimerDisplay(textEl);
+    reminderTimer = setInterval(() => {
+      timerSecondsRemaining--;
+      updateTimerDisplay(textEl);
+      if (timerSecondsRemaining <= 0) {
+        clearInterval(reminderTimer);
+        if (statusEl) statusEl.textContent = t.timerAlert;
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('AnemiCare Dosage Alert', { body: 'Time to administer your scheduled Iron supplement!' });
+        }
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay(textEl) {
+    if (!textEl) return;
+    const h = String(Math.floor(timerSecondsRemaining / 3600)).padStart(2, '0');
+    const m = String(Math.floor((timerSecondsRemaining % 3600) / 60)).padStart(2, '0');
+    const s = String(timerSecondsRemaining % 60).padStart(2, '0');
+    textEl.textContent = `${h}:${m}:${s}`;
+  }
+
+  /* ==========================================
+     8. LANGUAGE APPLICATION
+     ========================================== */
+  function applyLanguage() {
+    const t = TRANSLATIONS[currentLang];
+
+    // Update lang button label
+    const langBtn = document.getElementById('lang-toggle-btn');
+    if (langBtn) langBtn.textContent = t.langBtnLabel;
+
+    // Disclaimer
+    const disc = document.getElementById('top-disclaimer-text');
+    if (disc) disc.innerHTML = `<strong>${currentLang === 'si' ? 'සායනික රෝග විනිශ්චය:' : 'Clinical Diagnostic:'}</strong> ${t.disclaimer.replace('🏥 ', '')}`;
+
+    // Brand badge
+    const brand = document.getElementById('brand-sub-badge');
+    if (brand) brand.textContent = t.brandSub;
+
+    // Nav tabs
+    const navMap = {
+      'nav-btn-home': t.navHome, 'nav-btn-about': t.navAbout, 'nav-btn-symptoms': t.navSymptoms,
+      'nav-btn-photo': t.navPhoto, 'nav-btn-risk': t.navRisk, 'nav-btn-guidance': t.navGuidance,
+      'nav-btn-nutrition': t.navNutrition, 'nav-btn-tracker': t.navTracker
+    };
+    Object.entries(navMap).forEach(([id, label]) => { const el = document.getElementById(id); if (el) el.textContent = label; });
+
+    // Hero section
+    const heroTitle = document.getElementById('hero-title-text'); if (heroTitle) heroTitle.textContent = t.heroTitle;
+    const heroSub = document.getElementById('hero-sub-text'); if (heroSub) heroSub.textContent = t.heroSub;
+    const healthTip = document.getElementById('daily-health-tip'); if (healthTip) healthTip.textContent = t.healthTip;
+
+    // Dashboard quick cards
+    const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+    setText('quick-eye-title', t.quickEye);
+    setText('quick-eye-sub', t.quickEyeSub);
+    setText('btn-eye-guide', t.btnEyeGuide);
+    setText('btn-run-engine', t.btnRunEngine);
+    setText('quick-meter-title', t.quickMeter);
+    setText('btn-full-gauge', t.btnFullGauge);
+    setText('quick-photo-title', t.quickPhoto);
+    setText('quick-photo-sub', t.quickPhotoSub);
+    setText('btn-open-gallery', t.btnOpenGallery);
+    setText('quick-nutri-title', t.quickNutri);
+    setText('quick-nutri-sub', t.quickNutriSub);
+    setText('btn-explore-food', t.btnExploreFood);
+    setText('quick-track-title', t.quickTrack);
+    setText('quick-track-sub', t.quickTrackSub);
+    setText('btn-open-tracker', t.btnOpenTracker);
+
+    // Section titles
+    setText('sec2-title', t.sec2Title); setText('sec2-sub', t.sec2Sub);
+    setText('sec3-title', t.sec3Title); setText('sec3-sub', t.sec3Sub);
+    setText('sec4-title', t.sec4Title); setText('sec4-sub', t.sec4Sub);
+    setText('sec5-title', t.sec5Title); setText('sec5-sub', t.sec5Sub);
+    setText('sec6-title', t.sec6Title); setText('sec6-sub', t.sec6Sub);
+    setText('sec7-title', t.sec7Title); setText('sec7-sub', t.sec7Sub);
+    setText('sec8-title', t.sec8Title); setText('sec8-sub', t.sec8Sub);
+
+    // Re-render all dynamic sections with new language
+    renderSymptoms();
+    renderPhotoGuide();
+    renderDescription();
+    renderNutritionWidgets();
+    renderTracker();
+    updateCalculatedViews();
+  }
+
+  /* ==========================================
+     9. APP INITIALIZATION
+     ========================================== */
+  function initApp() {
+    // Theme
+    const savedTheme = localStorage.getItem('anemicare_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    if (themeBtn) {
+      themeBtn.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+      themeBtn.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('anemicare_theme', next);
+        themeBtn.textContent = next === 'light' ? '🌙' : '☀️';
+      });
+    }
+
+    // Language toggle
+    document.getElementById('lang-toggle-btn')?.addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'si' : 'en';
+      localStorage.setItem('anemicare_lang', currentLang);
+      applyLanguage();
+    });
+
+    // Font scaling
+    let scaleLevel = parseInt(localStorage.getItem('anemicare_font_scale') || '0');
+    const sizes = ['16px', '18px', '20px'];
+    document.documentElement.style.setProperty('--font-size-base', sizes[scaleLevel]);
+    document.getElementById('font-scale-btn')?.addEventListener('click', () => {
+      scaleLevel = (scaleLevel + 1) % 3;
+      document.documentElement.style.setProperty('--font-size-base', sizes[scaleLevel]);
+      localStorage.setItem('anemicare_font_scale', scaleLevel);
+    });
+
+    // Nav tab routing
+    document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchSection(btn.getAttribute('data-section')));
+    });
+
+    // Quick-nav buttons
+    document.querySelectorAll('.quick-nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target');
+        if (target) switchSection(target);
+      });
+    });
+
+    // Brand logo home link
+    document.getElementById('brand-home-link')?.addEventListener('click', e => {
+      e.preventDefault();
+      switchSection('section-home');
+    });
+
+    // Request notification permission for timer alerts
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+
+    // Apply language and render everything
+    applyLanguage();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+  } else {
+    initApp();
+  }
+
+})();
+
+  </script>
+</body>
+</html>
